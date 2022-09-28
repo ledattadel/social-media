@@ -61,7 +61,11 @@ export const updateProfileUser = ({userData, avatar, auth}) => async (dispatch) 
         let media;
         dispatch({type: GLOBALTYPES.ALERT, payload: {loading: true}})
 
+        console.log('avatar',avatar);
+
         if(avatar) media = await imageUpload([avatar])
+
+       
 
         const res = await patchDataAPI("user", {
             ...userData,
@@ -81,10 +85,11 @@ export const updateProfileUser = ({userData, avatar, auth}) => async (dispatch) 
 
         dispatch({type: GLOBALTYPES.ALERT, payload: {success: res.data.msg}})
     } catch (err) {
-        dispatch({
-            type: GLOBALTYPES.ALERT, 
-            payload: {error: err.response.data.msg}
-        })
+        // dispatch({
+        //     type: GLOBALTYPES.ALERT, 
+        //     payload: {error: err.response.data.msg}
+        // })
+        console.log(err);
     }
 }
 

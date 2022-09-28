@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { GLOBALTYPES } from '../../redux/actions/globalTypes'
-
+import GlobalLoading from '../../components/loading/globalLoading/GlobalLoading'
 import Loading from './Loading'
 import Toast from './Toast'
 
@@ -11,7 +11,7 @@ const Notify = () => {
 
     return (
         <div>
-            {alert.loading && <Loading />}
+            {alert.loading && <GlobalLoading />}
 
             {
                 alert.error && 

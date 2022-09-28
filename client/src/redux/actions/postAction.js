@@ -17,7 +17,11 @@ export const createPost = ({content, images, auth, socket}) => async (dispatch) 
     let media = []
     try {
         dispatch({ type: GLOBALTYPES.ALERT, payload: {loading: true} })
-        if(images.length > 0) media = await imageUpload(images)
+        
+        if(images.length > 0) {
+            media = await imageUpload(images)
+        }
+
 
         const res = await postDataAPI('posts', { content, images: media }, auth.token)
 
@@ -60,10 +64,11 @@ export const getPosts = (token) => async (dispatch) => {
 
         dispatch({ type: POST_TYPES.LOADING_POST, payload: false })
     } catch (err) {
-        dispatch({
-            type: GLOBALTYPES.ALERT,
-            payload: {error: err.response.data.msg}
-        })
+        console.log(err);
+        // dispatch({
+        //     type: GLOBALTYPES.ALERT,
+        //     payload: {error: err.response.data.msg}
+        // })
     }
 }
 

@@ -4,6 +4,9 @@ import { GLOBALTYPES } from '../redux/actions/globalTypes'
 import { createPost, updatePost } from '../redux/actions/postAction'
 import Icons from './Icons'
 import { imageShow, videoShow } from '../utils/mediaShow'
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+import * as htmlToImage from 'html-to-image';
+
 
 const StatusModal = () => {
     const { auth, theme, status, socket } = useSelector(state => state)
@@ -16,6 +19,9 @@ const StatusModal = () => {
     const videoRef = useRef()
     const refCanvas = useRef()
     const [tracks, setTracks] = useState('')
+
+
+
 
     const handleChangeImages = e => {
         const files = [...e.target.files]
@@ -66,7 +72,9 @@ const StatusModal = () => {
         const ctx = refCanvas.current.getContext('2d')
         ctx.drawImage(videoRef.current, 0, 0, width, height)
         let URL = refCanvas.current.toDataURL()
+        
         setImages([...images, {camera: URL}])
+        console.log(images);
     }
 
     const handleStopStream = () => {
@@ -76,17 +84,18 @@ const StatusModal = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if(images.length === 0)
-        return dispatch({ 
-            type: GLOBALTYPES.ALERT, payload: {error: "Please add your photo."}
-        })
+        console.log("images.length",images.length);
+        // if(images.length === 0)
+        // return dispatch({ 
+        //     type: GLOBALTYPES.ALERT, payload: {error: "Please add your photo."}
+        // })
 
         if(status.onEdit){
             dispatch(updatePost({content, images, auth, status}))
         }else{
             dispatch(createPost({content, images, auth, socket}))
         }
-        
+            
 
         setContent('')
         setImages([])

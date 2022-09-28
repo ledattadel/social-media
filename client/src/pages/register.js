@@ -35,7 +35,7 @@ const Register = () => {
     return (
         <div className="auth_page">
             <form onSubmit={handleSubmit}>
-                <h3 className="text-uppercase text-center mb-4">V-Network</h3>
+                <h3 className="text-uppercase text-center mb-4">Register</h3>
 
                 <div className="form-group">
                     <label htmlFor="fullname">Full Name</label>
@@ -135,6 +135,13 @@ const Register = () => {
                     Already have an account? <Link to="/" style={{color: "crimson"}}>Login Now</Link>
                 </p>
             </form>
+            <div class="drops">
+    <div class="drop drop-1"></div>
+    <div class="drop drop-2"></div>
+    <div class="drop drop-3"></div>
+    <div class="drop drop-4"></div>
+    <div class="drop drop-5"></div>
+  </div>
         </div>
     )
 }

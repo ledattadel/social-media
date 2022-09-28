@@ -14,8 +14,12 @@ export const login = (data) => async (dispatch) => {
                 user: res.data.user
             } 
         })
-
+       
         localStorage.setItem("firstLogin", true)
+        localStorage.setItem("user", res.data.user)
+        localStorage.setItem("token", res.data.access_token)
+
+
         dispatch({ 
             type: GLOBALTYPES.ALERT, 
             payload: {
@@ -32,6 +36,18 @@ export const login = (data) => async (dispatch) => {
         })
     }
 }
+export const resetpassword = (data) => async (dispatch) => {
+    try {
+        dispatch({ type: GLOBALTYPES.ALERT, payload: {loading: true} })
+        const res = await postDataAPI('forgot', data)
+
+        console.log(res);
+        
+    } catch (err) {
+       console.log(err);
+    }
+}
+
 
 
 export const refreshToken = () => async (dispatch) => {
@@ -41,6 +57,7 @@ export const refreshToken = () => async (dispatch) => {
 
         try {
             const res = await postDataAPI('refresh_token')
+            console.log("Kiem tra refreshToken:",res);
             dispatch({ 
                 type: GLOBALTYPES.AUTH, 
                 payload: {

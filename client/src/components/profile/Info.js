@@ -33,7 +33,9 @@ const Info = ({id, auth, profile, dispatch}) => {
     
 
     return (
-        <div className="info">
+        <div style={{
+            color:'white !important' 
+        }} className="info">
             {
                 userData.map(user => (
                     <div className="info_container" key={user._id}>
@@ -41,7 +43,9 @@ const Info = ({id, auth, profile, dispatch}) => {
 
                         <div className="info_content">
                             <div className="info_content_title">
-                                <h2>{user.username}</h2>
+                                <h2 style={{
+            color:'white !important' 
+        }}>{user.username}</h2>
                                 {
                                     user._id === auth.user._id
                                     ?  <button className="btn btn-outline-info"

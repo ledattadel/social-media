@@ -7,6 +7,7 @@ import PrivateRouter from './customRouter/PrivateRouter'
 import Home from './pages/home'
 import Login from './pages/login'
 import Register from './pages/register'
+import Resetpassword from './pages/resetpassword'
 
 import Alert from './components/alert/Alert'
 import Header from './components/header/Header'
@@ -38,10 +39,12 @@ function App() {
   },[dispatch])
 
   useEffect(() => {
-    if(auth.token) {
-      dispatch(getPosts(auth.token))
-      dispatch(getSuggestions(auth.token))
-      dispatch(getNotifies(auth.token))
+    let token = auth.token?auth.token:localStorage.getItem('token');
+    console.log('token',token);
+    if(token) {
+      dispatch(getPosts(token))
+      dispatch(getSuggestions(token))
+      dispatch(getNotifies(token))
     }
   }, [dispatch, auth.token])
 
@@ -82,6 +85,7 @@ function App() {
           
           <Route exact path="/" component={auth.token ? Home : Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/reset" component={Resetpassword} />
 
           <PrivateRouter exact path="/:page" component={PageRender} />
           <PrivateRouter exact path="/:page/:id" component={PageRender} />

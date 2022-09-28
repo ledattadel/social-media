@@ -32,7 +32,7 @@ const Login = () => {
     return (
         <div className="auth_page">
             <form onSubmit={handleSubmit}>
-                <h3 className="text-uppercase text-center mb-4">V-Network</h3>
+                <h3 className="text-uppercase text-center mb-4">Login</h3>
 
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>
@@ -68,7 +68,17 @@ const Login = () => {
                 <p className="my-2">
                     You don't have an account? <Link to="/register" style={{color: "crimson"}}>Register Now</Link>
                 </p>
+                <p className="my-2">
+                   <Link to="/reset" style={{color: "crimson"}}> Forgot password? </Link>
+                </p>
             </form>
+            <div class="drops">
+    <div class="drop drop-1"></div>
+    <div class="drop drop-2"></div>
+    <div class="drop drop-3"></div>
+    <div class="drop drop-4"></div>
+    <div class="drop drop-5"></div>
+  </div>
         </div>
     )
 }

@@ -37,6 +37,7 @@
     border: 1px solid #f3f3f3;
     color: #555;
     cursor: pointer;
+    background-color: white;
 }
 .message_chat_list .message_user.active{
     background: #eee;

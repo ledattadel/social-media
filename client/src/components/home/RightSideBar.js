@@ -5,13 +5,21 @@ import UserCard from '../UserCard'
 import FollowBtn from '../FollowBtn'
 import LoadIcon from '../../images/loading.gif'
 import { getSuggestions } from '../../redux/actions/suggestionsAction'
+import ChatInScreen from '../message/ChatInScreen'
 
 const RightSideBar = () => {
     const { auth, suggestions } = useSelector(state => state)
     const dispatch = useDispatch()
 
     return (
-        <div className="mt-3">
+        <div style={{
+            // backgroundColor: 'white',
+            width: '300px',
+            height:'100vh',
+            position: 'fixed',
+            right:'20px',
+            top: '60px'
+        }} className="mt-3 rightSideBar">
             <UserCard user={auth.user} />
 
             <div className="d-flex justify-content-between align-items-center my-2">
@@ -38,19 +46,9 @@ const RightSideBar = () => {
             }
 
             <div style={{opacity: 0.5}} className="my-2" >
-                <a href="https://www.youtube.com/c/DevATHTML" target="_blank" rel="noreferrer"
-                style={{wordBreak: 'break-all'}} >
-                    https://www.youtube.com/c/DevATHTML
-                </a>
-                <small className="d-block">
-                    Welcome to our channel "DevAT-VietNam"
-                </small>
-
-                <small>
-                   &copy; 2021 V-NETWORK FROM DEV A.T VIET NAM
-                </small>
+               
             </div>
-
+            <ChatInScreen />
         </div>
     )
 }

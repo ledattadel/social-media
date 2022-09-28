@@ -9,6 +9,10 @@ router.get('/user/:id', auth, userCtrl.getUser)
 
 router.patch('/user', auth, userCtrl.updateUser)
 
+router.post('/reset', auth, userCtrl.resetPassword)
+
+
+
 router.patch('/user/:id/follow', auth, userCtrl.follow)
 router.patch('/user/:id/unfollow', auth, userCtrl.unfollow)
 

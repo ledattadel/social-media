@@ -1,6 +1,9 @@
 const Users = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const sendMail = require('./sendMail')
+
+const {CLIENT_URL} = process.env
 
 const authCtrl = {
     register: async (req, res) => {
@@ -33,6 +36,8 @@ const authCtrl = {
                 maxAge: 30*24*60*60*1000 // 30days
             })
 
+           
+
             await newUser.save()
 
             res.json({
@@ -61,11 +66,11 @@ const authCtrl = {
 
             const access_token = createAccessToken({id: user._id})
             const refresh_token = createRefreshToken({id: user._id})
-
+           
             res.cookie('refreshtoken', refresh_token, {
                 httpOnly: true,
-                path: '/api/refresh_token',
-                maxAge: 30*24*60*60*1000 // 30days
+                path: '/api/refresh_token',  
+                maxAge: 30*24*60*60*1000, // 30days
             })
 
             res.json({
@@ -88,9 +93,50 @@ const authCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
+    forgotPassword: async (req, res) => {
+        try {
+            const {email} = req.body
+            
+            const user = await Users.findOne({email})
+            .populate("followers following", "avatar username fullname followers following")
+
+
+
+            if(!user) return res.status(400).json({msg: "This email does not exist."})
+
+            const access_token = createAccessToken({id: user._id})
+            const url = `${CLIENT_URL}/user/reset/${access_token}`
+
+            let api = sendMail(email, url, "Reset your password")
+          
+            res.json({
+                msg: api,
+               
+            })
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    resetPassword: async (req, res) => {
+        try {
+            const {password} = req.body
+            console.log(password)
+            const passwordHash = await bcrypt.hash(password, 12)
+
+            await Users.findOneAndUpdate({_id: req.user.id}, {
+                password: passwordHash
+            })
+
+            res.json({msg: "Password successfully changed!"})
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+    },
     generateAccessToken: async (req, res) => {
         try {
+            
             const rf_token = req.cookies.refreshtoken
+            
             if(!rf_token) return res.status(400).json({msg: "Please login now."})
 
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, async(err, result) => {
